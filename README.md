@@ -1,5 +1,5 @@
 
-ck Chain notes
+Chain notes
 
 [Notes](Notes.md)
 
