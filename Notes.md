@@ -76,8 +76,26 @@
 	- 2 blocks submitted { A, B }
 	- If a new block is added on block A, Block B becoms invalid and vice versa
 
-## Attacks on blockchain || Double spending
+# Attacks on blockchain || Double spending
 
+## Ways on performing a double spending attacks on the blockchain
+
+### Race Attack
+- Attacker spends the same coin in rapid succession to two different addresses
+- To avoid this, it is recommended to wait at least one block confirmation before accepting the
+	payment
+
+### Finey Attack
+- Attacker pre mines a block with a transactionm spends the same coins in a second transaction
+	before releasing a block. The second transaction will not be validated. To prevent this,
+	recommended to wait for at least 6 block confirmations before accepting the payment
+
+### Majority attack || 51% attack
+- Attacker owns 51% of the computing power of the network. The attackr starts by making a
+	transaction that is brodcasted to the entire network, then mines a private blockchain where he
+	double spends the coins of the previous transaction.
+- Since the attacker owsn the majority of the computing power, he is guaranteed that he will have at
+	some point a longer chain than the "honest" network. 
 
 
 
