@@ -2,4 +2,4 @@
 
 ## Block Chain notes
 
-[Notes][./Notes.md]
+[Notes][https://github.com/muazwzxv/ber-blockchain-an/Notes.md]
