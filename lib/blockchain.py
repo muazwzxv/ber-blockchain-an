@@ -1,8 +1,8 @@
 from .block import Block
 from flask import Flask, request
-from server import peers
 import requests
 import time
+
 
 class Blockchain:
 
@@ -118,16 +118,3 @@ class Blockchain:
                 result = False
                 break
         return result
-
-    def consensus():
-        """
-        A simple concensus algorithm, if a longer valid chain is found, our
-        chain is replaced with it
-        """
-        global Blockchain
-
-        longest = None
-        current = len(Blockchain.chain)
-
-        for node in peers:
-
