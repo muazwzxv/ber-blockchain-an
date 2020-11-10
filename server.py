@@ -9,7 +9,21 @@ app = Flask(__name__)
 
 # Setup blockchain Object
 chain = Blockchain()
-print(chain)
+
+# Setup other host address in the network
+peers = set()
+
+
+@app.route("/node", methods=["POST"])
+def register_peer():
+    # Host address to peer node
+    address = request.get_json()["node_address"]
+    if not address:
+        return "Invalid data", 400
+    # Adds note to peer list
+    peers.add(address)
+
+    return get_chain()
 
 
 @app.route("/tranaction", methods=["POST"])
