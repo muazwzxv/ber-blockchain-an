@@ -1,7 +1,7 @@
-
 from .block import Block
 from flask import Flask, request
 import requests
+
 
 class Blockchain:
 
@@ -20,7 +20,7 @@ class Blockchain:
         valid hash = 1
         """
         genesis = Block(0, [], 0, "0")
-        genesis.hash = genesis.compute_hash()
+        genesis.hash = genesis.compute_hash(genesis)
 
         self.chain.append(genesis)
 
@@ -28,9 +28,12 @@ class Blockchain:
     def last_block(self):
         return self.chain[-1]
 
-    def is_valid_proof(cls, block, block_hash):
+    def is_valid_proof(self, block, block_hash):
         # Checks if block_hash is valid and satisfie the difficulty criteria
-        return(block_hash.startswth('0' * Blockchain.level) and block_hash == block.compute_hash())
+        return (
+            block_hash.startswth("0" * Blockchain.level)
+            and block_hash == block.compute_hash()
+        )
 
     def add(self, block, proof):
         """
@@ -43,10 +46,14 @@ class Blockchain:
 
         if prev_hash != block.prev_hash:
             return False
-        
+
         if not Blockchain.is_valid_proof(block, proof):
             return False
 
         block.hash = proof
         self.chain.append(block)
         return True
+
+
+chain = Blockchain()
+chain.generate_genesis_block()
