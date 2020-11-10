@@ -1,4 +1,5 @@
 from lib.blockchain import *
+from lib.block import *
 from flask import Flask, request
 import requests
 import time
@@ -94,6 +95,17 @@ def mine_transaction():
 @app.route("/pending", methods=["GET"])
 def get_pending_transaction():
     return json.dumps(chain.unconfirmed_transac)
+
+
+@app.route("/add_block", methods=["POST"])
+def verify_store_block():
+    param = request.get_json()
+    block = Block(
+        param["index"], param["transaction"], param["time"], param["prev_hash"]
+    )
+
+    proof = param["hash"]
+    added = chain.add(block, proof)
 
 
 # Helper functions
