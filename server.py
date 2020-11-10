@@ -44,3 +44,8 @@ def mine_transaction():
     if not result:
         return "No Transaction to mine"
     return "Block #{} is mined".format(result)
+
+
+@app.route("/pending", methods=["GET"])
+def get_pending_transaction():
+    return json.dumps(chain.unconfirmed_transac)
