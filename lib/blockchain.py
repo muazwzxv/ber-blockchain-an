@@ -1,6 +1,7 @@
 from .block import Block
 from flask import Flask, request
 import requests
+import time
 
 
 class Blockchain:
@@ -70,3 +71,26 @@ class Blockchain:
             compute_hash = block.compute_hash()
 
         return compute_hash
+
+    def mine(self):
+        # Adds the pending transaction to the blockchain
+        # - Adding transaction to block
+        # - Figure out proof_of_work
+
+        if not self.unconfirmed_transac:
+            return False
+
+        last = self.last_block
+
+        new_block = Block(
+            index=last_block.index + 1,
+            transaction=self.unconfirmed_transac,
+            time=time.time(),
+            prev_hash=last.hash,
+        )
+
+        proof = self.proof_of_work(new_block)
+        self.add(new_block, proof)
+        self.unconfirmed_transac = []
+
+        return new_block.index
