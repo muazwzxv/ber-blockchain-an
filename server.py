@@ -93,3 +93,23 @@ def mine_transaction():
 @app.route("/pending", methods=["GET"])
 def get_pending_transaction():
     return json.dumps(chain.unconfirmed_transac)
+
+
+# Helper functions
+def create_chain_from_dump(chain_dump):
+    chain = Blockchain()
+
+    for i, data in enumerate(chain_dump):
+        block = Block(
+            data["index"], data["transaction"], data["time"], data["prev_hash"]
+        )
+        proof = data["hash"]
+
+        if i > 0:
+            added = chain.add(block, proof)
+            if not added:
+                raise Exception("The chain is tempered!!")
+        else:
+            chain.chain.append(block)
+
+    return chain
