@@ -11,6 +11,7 @@ class Blockchain:
     def __init__(self):
         self.unconfirmed_transac = []
         self.chain = []
+        self.generate_genesis_block()
 
     def generate_genesis_block(self):
         """
@@ -35,6 +36,9 @@ class Blockchain:
             and block_hash == block.compute_hash()
         )
 
+    def getFirstBlock(self):
+        return self.chain[0]
+
     def add(self, block, proof):
         """
         Adds block to the chain after verified
@@ -54,6 +58,15 @@ class Blockchain:
         self.chain.append(block)
         return True
 
+    def proof_of_work(self, block):
+        # Tries different vaue of nonce to get a hash that satisfies our level criteria
+        # Once the proper nonce is found, the compute_hash based on the nonce that satisfie the condition
+        # is returned
 
-chain = Blockchain()
-chain.generate_genesis_block()
+        block.nonce = 0
+        compute_hash = block.compute_hash()
+        while not compute_hash.startswith("0" * Blockchain.level):
+            block.nonce += 1
+            compute_hash = block.compute_hash()
+
+        return compute_hash
