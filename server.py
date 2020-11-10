@@ -26,6 +26,33 @@ def register_peer():
     return get_chain()
 
 
+@app.route("/register_with", methods=["POST"])
+def register_with_existing_node():
+    """
+    Calls the /node endpoint to register current node with the remote node specified
+    in the request, and synct the blockchain as well with the remote node
+    """
+    node = request.get_json()["node_address"]
+    if not node:
+        return "Invalid data", 400
+    data = {"node_address": request.host_url}
+    header = {"Content-Type": "application/json"}
+
+    # make request to register with remote node
+    response = requests.post(node + "/node", data=json.dumps(data), headers=header)
+
+    if not response.status_code == 200:
+        return response.content, response.status_code
+
+    global Blockchain
+    global peers
+
+    # update chain and the peers
+    chain_dump = response.json()["chain"]
+    peers.update(response.json()["peers"])
+    return "Registration successful", 200
+
+
 @app.route("/tranaction", methods=["POST"])
 def new_transaction():
     data = request.get_json()
