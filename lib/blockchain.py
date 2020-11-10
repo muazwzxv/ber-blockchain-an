@@ -29,13 +29,6 @@ class Blockchain:
     def last_block(self):
         return self.chain[-1]
 
-    def is_valid_proof(self, block, block_hash):
-        # Checks if block_hash is valid and satisfie the difficulty criteria
-        return (
-            block_hash.startswth("0" * Blockchain.level)
-            and block_hash == block.compute_hash()
-        )
-
     def getFirstBlock(self):
         return self.chain[0]
 
@@ -57,6 +50,13 @@ class Blockchain:
         block.hash = proof
         self.chain.append(block)
         return True
+
+    def is_valid_proof(self, block, block_hash):
+        # Checks if block_hash is valid and satisfie the difficulty criteria
+        return (
+            block_hash.startswth("0" * Blockchain.level)
+            and block_hash == block.compute_hash()
+        )
 
     def proof_of_work(self, block):
         # Tries different vaue of nonce to get a hash that satisfies our level criteria
