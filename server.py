@@ -29,6 +29,8 @@ def register_peer():
 @app.route("/register_with", methods=["POST"])
 def register_with_existing_node():
     """
+    Internal endpoint
+    -----------------
     Calls the /node endpoint to register current node with the remote node specified
     in the request, and synct the blockchain as well with the remote node
     """
@@ -50,6 +52,7 @@ def register_with_existing_node():
     # update chain and the peers
     chain_dump = response.json()["chain"]
     peers.update(response.json()["peers"])
+
     return "Registration successful", 200
 
 
