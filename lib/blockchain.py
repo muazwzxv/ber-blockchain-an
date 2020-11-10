@@ -1,8 +1,8 @@
 from .block import Block
 from flask import Flask, request
+from server import peers
 import requests
 import time
-
 
 class Blockchain:
 
@@ -94,3 +94,40 @@ class Blockchain:
         self.unconfirmed_transac = []
 
         return new_block.index
+
+    def check_chain_validity(self, chain):
+        """
+        Helper method to check if the blockchain is valid
+        """
+        result = True
+        prev_hash = "0"
+
+        # Iterate through all the block
+        for block in chain:
+            block_hash = block.hash
+            # Remove hash field to recompute the hash again
+            # - compute_hash method
+
+            # delattr - removes an attribute from an object
+            # delattr(object, "toRemove")
+            delattr(block, "hash")
+            if (
+                not self.is_valid_proof(block, block.hash)
+                or prev_hash != block.prev_hash
+            ):
+                result = False
+                break
+        return result
+
+    def consensus():
+        """
+        A simple concensus algorithm, if a longer valid chain is found, our
+        chain is replaced with it
+        """
+        global Blockchain
+
+        longest = None
+        current = len(Blockchain.chain)
+
+        for node in peers:
+

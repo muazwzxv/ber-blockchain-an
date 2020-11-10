@@ -26,6 +26,7 @@ def register_peer():
     return get_chain()
 
 
+# Endpoint to register with an existing node
 @app.route("/register_with", methods=["POST"])
 def register_with_existing_node():
     """
@@ -46,7 +47,7 @@ def register_with_existing_node():
     if not response.status_code == 200:
         return response.content, response.status_code
 
-    global Blockchain
+    global chain
     global peers
 
     # update chain and the peers
@@ -113,3 +114,30 @@ def create_chain_from_dump(chain_dump):
             chain.chain.append(block)
 
     return chain
+
+
+def consensus():
+    """
+    A simple concensus algorithm, if a longer valid chain is found, our
+    chain is replaced with it
+    """
+    global chain
+
+    longest = None
+    current = len(Blockchain.chain)
+
+    for node in peers:
+        res = requests.get("{}/chain".format(node))
+        length = res.json()["length"]
+        chain_res = res.json()["chain"]
+
+        if length > current and chain.check_chain_validity(chain_res):
+            # Longest new valid chain is found
+            current = length
+            longest = chain_res
+
+    if longest:
+        chain = longest
+        return True
+
+    return False
