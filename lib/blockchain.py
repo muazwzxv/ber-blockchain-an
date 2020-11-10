@@ -1,6 +1,6 @@
 
-#from .block import Block
-import flask import Flask, request
+from .block import Block
+from flask import Flask, request
 import requests
 
 class Blockchain:
