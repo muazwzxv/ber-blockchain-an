@@ -27,7 +27,7 @@ class Blockchain:
         self.chain.append(genesis)
 
     @property
-    def last_block(self):
+    def get_last_block(self):
         return self.chain[-1]
 
     def getFirstBlock(self):
@@ -40,7 +40,7 @@ class Blockchain:
         - Checks if the referred prev_hash in the block matches with latest block in the chain
         """
 
-        prev_hash = self.last_block.hash
+        prev_hash = self.get_last_block.hash
 
         if prev_hash != block.prev_hash:
             return False
@@ -80,10 +80,10 @@ class Blockchain:
         if not self.unconfirmed_transac:
             return False
 
-        last = self.last_block
+        last = self.get_last_block
 
         new_block = Block(
-            index=last_block.index + 1,
+            index=get_last_block.index + 1,
             transaction=self.unconfirmed_transac,
             time=time.time(),
             prev_hash=last.hash,

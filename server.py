@@ -33,5 +33,14 @@ def get_chain():
 
     for block in chain:
         chain_data.append(block.__dict__)
-
     return json.dumps({"length": len(chain_data), "chain": chain_data})
+
+
+@app.route("/mine", methods=["GET"])
+def mine_transaction():
+    # endpoint that mine unfonfirmed transctions
+    result = chain.mine()
+
+    if not result:
+        return "No Transaction to mine"
+    return "Block #{} is mined".format(result)
