@@ -118,3 +118,6 @@ class Blockchain:
                 result = False
                 break
         return result
+
+    def helloMuaz(self):
+        return "hello muaz"
