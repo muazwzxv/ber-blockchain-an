@@ -108,6 +108,17 @@ def verify_store_block():
     added = chain.add(block, proof)
 
 
+@app.route("/add_block", methods=["POST"])
+def verify_store_block():
+    param = request.get_json()
+    block = Block(
+        param["index"], param["transaction"], param["time"], param["prev_hash"]
+    )
+
+    proof = param["hash"]
+    added = chain.add(block, proof)
+
+
 # Helper functions
 def create_chain_from_dump(chain_dump):
     chain = Blockchain()
